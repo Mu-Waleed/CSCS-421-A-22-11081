@@ -14,6 +14,7 @@ def print_file(fileName):
     print(f.read())
     print("")
 
+    
 # method to perform encryption or decryption
 def process(user, fileName):
     if user == 1:
